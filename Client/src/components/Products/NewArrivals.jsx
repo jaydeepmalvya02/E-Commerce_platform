@@ -136,13 +136,13 @@ const NewArrivals = () => {
 
     }
 
-    console.log({
-      scrollLeft:container.scrollLeft,
-      clientWidth:container.clientWidth,
-      containerScrollWidth:container.scrollWidth,
-      offsetLeft: scrollRef.current.offsetLeft,
+    // console.log({
+    //   scrollLeft:container.scrollLeft,
+    //   clientWidth:container.clientWidth,
+    //   containerScrollWidth:container.scrollWidth,
+    //   offsetLeft: scrollRef.current.offsetLeft,
 
-    });
+    // });
     
   }
   useEffect(() => {
