@@ -2,11 +2,15 @@ import React from 'react'
 import { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 import CarContent from '../Cart/CarContent';
+import { useNavigate } from 'react-router-dom';
 
 const CartDrawer = ({drawerOpen,toggleCartDrawer}) => {
 
+ const navigate=useNavigate()
+  const handleCheckout=()=>{
+    navigate("/checkout")
 
-
+  }
   return (
     <div
       className={`fixed top-0 right-0 w-3/4 sm:w-[30rem] md:w-2/4 h-full bg-white shadow-lg transform transition-transform duration-300 flex flex-col z-50 ${
@@ -30,7 +34,9 @@ const CartDrawer = ({drawerOpen,toggleCartDrawer}) => {
 
       {/* Chckout button fixed at the bottom */}
       <div className="">
-        <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-600">Checkout</button>
+        <button 
+        onClick={handleCheckout}
+        className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-600">Checkout</button>
         <p className='text-sm tracking-tighter text-gray-500 mt-2 text-center'>
           Shipping, taxes, and discount codes calculate at checkout
         </p>

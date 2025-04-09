@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import CollectionPage from './components/Products/CollectionPage';
 import ProductDetails from './components/Products/ProductDetails';
+import Checkout from './components/Cart/Checkout';
 
 function App() {
  
@@ -22,6 +23,7 @@ function App() {
         <Route path='profile' element={<Profile/>}></Route>
         <Route path='collections/:collection' element={<CollectionPage/>}></Route>
         <Route path='product/:id' element={<ProductDetails/>}></Route>
+        <Route path='checkout' element={<Checkout/>}></Route>
         </Route>
         <Route> {/* AdminLayout */}</Route>
       </Routes>
