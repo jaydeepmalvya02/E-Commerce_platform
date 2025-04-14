@@ -12,6 +12,9 @@ import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
 import MyOrderspage from './pages/MyOrderspage';
 import MyOrdersPage from './pages/MyOrderspage';
+import AdminLayout from './components/Admin/AdminLayout';
+import AdminHomePage from './components/Admin/AdminHomePage';
+import UserManagement from './components/Admin/UserManagement';
 
 function App() {
  
@@ -21,22 +24,24 @@ function App() {
     <Toaster position="top-right"/>
       <Routes>
         <Route path='/' element={<UserLayout/>}>{/* UserLayout */}
-        <Route index element={<Home/>}></Route>
-        <Route path='login' element={<Login/>}></Route>
-        <Route path='register' element={<Register/>}></Route>
-        <Route path='profile' element={<Profile/>}></Route>
-        <Route path='collections/:collection' element={<CollectionPage/>}></Route>
-        <Route path='product/:id' element={<ProductDetails/>}></Route>
-        <Route path='checkout' element={<Checkout/>}></Route>
-        <Route path='order-confirmation' element={<OrderConfirmationPage/>}></Route>
-        <Route path='order/:id' element={<OrderDetailsPage/>}></Route>
-        <Route path='my-orders' element={<MyOrdersPage/>}></Route>
-        
-
-
-
+        <Route index element={<Home/>}/>
+        <Route path='login' element={<Login/>}/>
+        <Route path='register' element={<Register/>}/>
+        <Route path='profile' element={<Profile/>}/>
+        <Route path='collections/:collection' element={<CollectionPage/>}/>
+        <Route path='product/:id' element={<ProductDetails/>}/>
+        <Route path='checkout' element={<Checkout/>}/>
+        <Route path='order-confirmation' element={<OrderConfirmationPage/>}/>
+        <Route path='order/:id' element={<OrderDetailsPage/>}/>
+        <Route path='my-orders' element={<MyOrdersPage/>}/>
         </Route>
-        <Route> {/* AdminLayout */}</Route>
+       
+        <Route path='/admin'
+        element={<AdminLayout/>}
+        > {/* AdminLayout */}
+        <Route index element={<AdminHomePage/>}/>
+        <Route path="users" element={<UserManagement/>}/>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
