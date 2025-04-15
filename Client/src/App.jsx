@@ -10,12 +10,13 @@ import ProductDetails from './components/Products/ProductDetails';
 import Checkout from './components/Cart/Checkout';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import OrderDetailsPage from './pages/OrderDetailsPage';
-import MyOrderspage from './pages/MyOrderspage';
 import MyOrdersPage from './pages/MyOrderspage';
 import AdminLayout from './components/Admin/AdminLayout';
 import AdminHomePage from './components/Admin/AdminHomePage';
 import UserManagement from './components/Admin/UserManagement';
 import ProductManagement from './components/Admin/ProductManagement';
+import EditProduct from './components/Admin/EditProduct';
+import OrderManagement from './components/Admin/OrderManagement';
 
 function App() {
  
@@ -43,6 +44,9 @@ function App() {
         <Route index element={<AdminHomePage/>}/>
         <Route path="users" element={<UserManagement/>}/>
         <Route path="products" element={<ProductManagement/>}/>
+        <Route path="products/:id/edit" element={<EditProduct/>}/>
+        <Route path="orders" element={<OrderManagement/>}/>
+
         </Route>
       </Routes>
     </BrowserRouter>
