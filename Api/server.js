@@ -3,6 +3,7 @@ const cors=require('cors')
 const dotenv=require('dotenv')
 const connectDB=require('./config/db.js')
 const userRoutes=require('./routes/userRoutes.js')
+const productRoutes=require('./routes/ProductRoutes.js')
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ app.get("/",(req,res)=>{
 })
 // API Routes
 app.use('/api/users',userRoutes)
+app.use('/api/products',productRoutes)
 
 
 app.listen(PORT,()=>{
