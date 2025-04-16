@@ -4,6 +4,7 @@ const dotenv=require('dotenv')
 const connectDB=require('./config/db.js')
 const userRoutes=require('./routes/userRoutes.js')
 const productRoutes=require('./routes/ProductRoutes.js')
+const cartRoutes=require('./routes/cartRoutes.js')
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.get("/",(req,res)=>{
 // API Routes
 app.use('/api/users',userRoutes)
 app.use('/api/products',productRoutes)
+app.use('/api/cart',cartRoutes)
 
 
 app.listen(PORT,()=>{
