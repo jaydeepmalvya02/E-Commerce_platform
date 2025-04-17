@@ -6,7 +6,8 @@ const userRoutes=require('./routes/userRoutes.js')
 const productRoutes=require('./routes/ProductRoutes.js')
 const cartRoutes=require('./routes/cartRoutes.js')
 const checkoutRoutes=require('./routes/checkoutRoutes.js')
-
+const orderRoutes=require('./routes/orderRoutes.js')
+const uploadRoutes=require('./routes/uploadRoutes.js')
 dotenv.config()
 
 const app=express()
@@ -25,7 +26,8 @@ app.use('/api/users',userRoutes)
 app.use('/api/products',productRoutes)
 app.use('/api/cart',cartRoutes)
 app.use('/api/checkout',checkoutRoutes)
-
+app.use('/api/orders',orderRoutes)
+app.use('/api/upload',uploadRoutes)
 
 app.listen(PORT,()=>{
     console.log(`Server is running on http://localhost:${PORT}`);
