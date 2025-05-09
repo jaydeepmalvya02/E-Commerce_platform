@@ -253,7 +253,7 @@ router.get('/best-seller',async(req,res)=>{
 // @route GET /api/products/new-arrival
 // @desc Retrieve latest 8 products-Creation one
 // @access Public
-router.get('/new-arrival',async(req,res)=>{
+router.get('/new-arrivals',async(req,res)=>{
   try {
     // Fetch latest 8 products
     const newArrivals=await Product.find().sort({createdAt:-1}).limit(8)

@@ -1,124 +1,168 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import { toast } from 'sonner'
-import ProductGrid from './ProductGrid';
+import { toast } from "sonner";
+import ProductGrid from "./ProductGrid";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchProductDetails,
+  fetchSimilarProducts,
+} from "../../redux/slices/productSlice";
+import { addToCart } from "../../redux/slices/cartSlice";
+import { useParams } from "react-router-dom";
 
+// const selectedProducts = {
+//   name: "Stylish Jacket",
+//   price: 1200,
+//   origionalPrice: 1500,
+//   description: "This is a stylish Jacket Perfect for any occasion",
+//   brand: "FashionBrand",
+//   material: "Leather",
+//   sizes: ["S", "M", "L", "XL"],
+//   colors: ["Red", "Black"],
+//   images: [
+//     {
+//       url: "https://picsum.photos/500/500/?random=14",
+//       altText: "Stylish Jacket 1",
+//     },
+//     {
+//       url: "https://picsum.photos/500/500/?random=22",
+//       altText: "Stylish Jacket 2",
+//     },
+//   ],
+// };
 
-const selectedProducts = {
-  name: "Stylish Jacket",
-  price: 1200,
-  origionalPrice: 1500,
-  description: "This is a stylish Jacket Perfect for any occasion",
-  brand: "FashionBrand",
-  material: "Leather",
-  sizes: ["S", "M", "L", "XL"],
-  colors: ["Red", "Black"],
-  images: [
-    {
-      url: "https://picsum.photos/500/500/?random=14",
-      altText: "Stylish Jacket 1",
-    },
-    {
-      url: "https://picsum.photos/500/500/?random=22",
-      altText: "Stylish Jacket 2",
-    },
-  ],
-};
+// const similarProducts = [
 
-const similarProducts = [
-  
-  {
-    _id: 2,
-    name: "product 2",
-    price: 1000,
-    images: [
-      {
-        url: "https://picsum.photos/500/500/?random=11",
-        altText: "product 1",
+//   {
+//     _id: 2,
+//     name: "product 2",
+//     price: 1000,
+//     images: [
+//       {
+//         url: "https://picsum.photos/500/500/?random=11",
+//         altText: "product 1",
 
-      },
-    ],
-  },
-  {
-    _id: 3,
-    name: "product 3",
-    price: 1000,
-    images: [
-      {
-        url: "https://picsum.photos/500/500/?random=10",
-        altText: "product 1",
-        
-      },
-    ],
-  },
-  {
-    _id: 4,
-    name: "product ",
-    price: 1000,
-    images: [
-      {
-        url: "https://picsum.photos/500/500/?random=4",
-        altText: "product 1",
-       
-      },
-    ],
-  },
-  {
-    _id:5 ,
-    name: "product 5",
-    price: 1000,
-    images: [
-      {
-        url: "https://picsum.photos/500/500/?random=5",
-        altText: "product 1",
-      },
-    ],
-  },
-]
+//       },
+//     ],
+//   },
+//   {
+//     _id: 3,
+//     name: "product 3",
+//     price: 1000,
+//     images: [
+//       {
+//         url: "https://picsum.photos/500/500/?random=10",
+//         altText: "product 1",
 
+//       },
+//     ],
+//   },
+//   {
+//     _id: 4,
+//     name: "product ",
+//     price: 1000,
+//     images: [
+//       {
+//         url: "https://picsum.photos/500/500/?random=4",
+//         altText: "product 1",
 
+//       },
+//     ],
+//   },
+//   {
+//     _id:5 ,
+//     name: "product 5",
+//     price: 1000,
+//     images: [
+//       {
+//         url: "https://picsum.photos/500/500/?random=5",
+//         altText: "product 1",
+//       },
+//     ],
+//   },
+// ]
 
-const ProductDetails = () => {
-  const [mainImage, setMainImage] = useState("")
-  const [selectedSize, setSelectedSize] = useState('')
-  const [selectedColor, setSelectedColor] = useState('')
-  const [quantity, setQuantity] = useState(1)
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+const ProductDetails = ({ productId }) => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { selectedProduct, loading, error, similarProducts } = useSelector(
+    (state) => state.products
+  );
+  const { user, guestId } = useSelector((state) => state.auth);
+  const [mainImage, setMainImage] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const productFetchId = productId || id;
+
   useEffect(() => {
-    if(selectedProducts?.images?.length>0){
-      setMainImage(selectedProducts.images[0].url)
+    if (productFetchId) {
+      dispatch(fetchProductDetails(productFetchId));
+      dispatch(fetchSimilarProducts({ id: productFetchId }));
     }
-  
-   
-  }, [selectedProducts])
-  
-  const handleQuantityChange=(action)=>{
-    if (action==='plus') setQuantity((prev)=>prev+1)
-  
-    if (action==='minus' && quantity>1) setQuantity((prev)=>prev-1)
-  }
-   const handleAddtoCart=()=>{
-    if(!selectedSize || !selectedColor){
-      toast.error("Please select size and color",{
+  }, [dispatch, productFetchId]);
+
+  useEffect(() => {
+    if (selectedProduct?.images?.length > 0) {
+      setMainImage(selectedProduct.images[0].url);
+    }
+  }, [selectedProduct]);
+
+  const handleQuantityChange = (action) => {
+    if (action === "plus") setQuantity((prev) => prev + 1);
+
+    if (action === "minus" && quantity > 1) setQuantity((prev) => prev - 1);
+  };
+  const handleAddtoCart = () => {
+    if (!selectedSize || !selectedColor) {
+      toast.error("Please select size and color", {
         duration: 1000,
+      });
+      return;
+    }
+    setIsButtonDisabled(true);
+    //  setTimeout(()=>{
+    //   toast.success("Product added to cart",{
+    //     duration: 1000,
+    //   })
+    //   setIsButtonDisabled(false)
+    //  },500)
+    dispatch(
+      addToCart({
+        productId: productFetchId,
+        quantity,
+        size: selectedSize,
+        color: selectedColor,
+        guestId,
+        userId: user?._id,
       })
-      return
-   }
-    setIsButtonDisabled(true)
-   setTimeout(()=>{
-    toast.success("Product added to cart",{
-      duration: 1000,
+    ).then(() => {
+      toast.success("Product added to cart!", {
+        duration: 1000,
+      });
     })
-    setIsButtonDisabled(false)
-   },500)
+    .finally(()=>{
+      setIsButtonDisabled(false)
+    })
+  };
+
+  if (loading){
+    return <p className="">Loading....</p>
+  }
+  if(error){
+    return <p className="text-red-700">Error:{error}</p>
   }
   return (
     <div className="p-6">
+      {selectedProduct && (
+
       <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg ">
         <div className="flex flex-col md:flex-row">
           {/* left thumbnails */}
           <div className="hidden md:flex flex-col space-y-4 mr-6">
-            {selectedProducts.images.map((image, index) => (
+            {selectedProduct.images.map((image, index) => (
               <img
                 key={index}
                 src={image.url}
@@ -142,7 +186,7 @@ const ProductDetails = () => {
           </div>
           {/* Mobile Thumbnail */}
           <div className="md:hidden flex overflow-x-scroll space-x-4 mb-4">
-            {selectedProducts.images.map((image, index) => (
+            {selectedProduct.images.map((image, index) => (
               <img
                 key={index}
                 src={image.url}
@@ -161,21 +205,21 @@ const ProductDetails = () => {
           mb-2
           "
             >
-              {selectedProducts.name}
+              {selectedProduct.name}
             </h1>
             <p className="text-lg text-gray-600 mb-1 line-through">
               ₹
-              {selectedProducts.origionalPrice &&
-                `${selectedProducts.origionalPrice}`}
+              {selectedProduct.origionalPrice &&
+                `${selectedProduct.origionalPrice}`}
             </p>
             <p className="text-xl text-gray-500 mb-2">
-              ₹{selectedProducts.price}
+              ₹{selectedProduct.price}
             </p>
-            <p className="text-gray-600 mb-4">{selectedProducts.description}</p>
+            <p className="text-gray-600 mb-4">{selectedProduct.description}</p>
             <div className="mb-4">
               <p className="text-gray-700">Color:</p>
               <div className="flex gap-2 mt-2">
-                {selectedProducts.colors.map((color) => (
+                {selectedProduct.colors.map((color) => (
                   <button
                     key={color}
                     onClick={() => setSelectedColor(color)}
@@ -195,7 +239,7 @@ const ProductDetails = () => {
             <div className="mb-4">
               <p className="text-gray-700">Size:</p>
               <div className="flex gap-2 mt-2">
-                {selectedProducts.sizes.map((size) => (
+                {selectedProduct.sizes.map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -228,12 +272,16 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            <button 
-            onClick={handleAddtoCart}
-            disabled={isButtonDisabled}
-            className={`bg-black text-white py-2 px-6 rounded w-full mb-4 ${isButtonDisabled ? 'opacity-50 cursor-not-allowed' : ' hover:bg-gray-900'}`}>
-              {isButtonDisabled ? 'Adding...' : 'ADD TO CART'}
-              
+            <button
+              onClick={handleAddtoCart}
+              disabled={isButtonDisabled}
+              className={`bg-black text-white py-2 px-6 rounded w-full mb-4 ${
+                isButtonDisabled
+                  ? "opacity-50 cursor-not-allowed"
+                  : " hover:bg-gray-900"
+              }`}
+            >
+              {isButtonDisabled ? "Adding..." : "ADD TO CART"}
             </button>
             <div className="mt-10 text-gray-700 ">
               <h3 className="text-xl font-bold mb-4">Characteristics:</h3>
@@ -241,11 +289,11 @@ const ProductDetails = () => {
                 <tbody>
                   <tr>
                     <td className="py-1">Brand</td>
-                    <td className="py-1">{selectedProducts.brand}</td>
+                    <td className="py-1">{selectedProduct.brand}</td>
                   </tr>
                   <tr>
                     <td className="py-1">Material</td>
-                    <td className="py-1">{selectedProducts.material}</td>
+                    <td className="py-1">{selectedProduct.material}</td>
                   </tr>
                 </tbody>
               </table>
@@ -256,11 +304,12 @@ const ProductDetails = () => {
           <h2 className="text-2xl text-center font-medium mb-4">
             You may also like
           </h2>
-          <ProductGrid products={similarProducts}/>
+          <ProductGrid products={similarProducts} loading={loading} error={error} />
         </div>
       </div>
+      )}
     </div>
   );
-}
+};
 
-export default ProductDetails
+export default ProductDetails;
