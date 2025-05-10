@@ -1,54 +1,72 @@
 import React from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { fetchAllOrders, updateOrderStatus } from "../../redux/slices/adminOrderSlice";
 
 const OrderManagement = () => {
-  const orders = [
-    {
-      _id: 23213321,
-      user: {
-        name: "John Doe",
-      },
-      totalPrice: 110,
-      status: "Processing",
-    },
-    {
-      _id: 23213321,
-      user: {
-        name: "John Doe",
-      },
-      totalPrice: 110,
-      status: "Processing",
-    },
-    {
-      _id: 23213321,
-      user: {
-        name: "John Doe",
-      },
-      totalPrice: 110,
-      status: "Processing",
-    },
-    {
-      _id: 23213321,
-      user: {
-        name: "John Doe",
-      },
-      totalPrice: 110,
-      status: "Processing",
-    },
-    {
-      _id: 23213321,
-      user: {
-        name: "John Doe",
-      },
-      totalPrice: 110,
-      status: "Processing",
-    },
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const { orders, loading, error } = useSelector((state) => state.adminOrders);
 
-  const handleStatusChange=(orderId,status)=>{
-    console.log({id:orderId,status});
-    
+  useEffect(() => {
+    if (!user || user.role !== "admin") {
+      navigate("/");
+    } else {
+      dispatch(fetchAllOrders());
+    }
+  }, [dispatch, user, navigate]);
 
-  }
+  // const orders = [
+  //   {
+  //     _id: 23213321,
+  //     user: {
+  //       name: "John Doe",
+  //     },
+  //     totalPrice: 110,
+  //     status: "Processing",
+  //   },
+  //   {
+  //     _id: 23213321,
+  //     user: {
+  //       name: "John Doe",
+  //     },
+  //     totalPrice: 110,
+  //     status: "Processing",
+  //   },
+  //   {
+  //     _id: 23213321,
+  //     user: {
+  //       name: "John Doe",
+  //     },
+  //     totalPrice: 110,
+  //     status: "Processing",
+  //   },
+  //   {
+  //     _id: 23213321,
+  //     user: {
+  //       name: "John Doe",
+  //     },
+  //     totalPrice: 110,
+  //     status: "Processing",
+  //   },
+  //   {
+  //     _id: 23213321,
+  //     user: {
+  //       name: "John Doe",
+  //     },
+  //     totalPrice: 110,
+  //     status: "Processing",
+  //   },
+  // ];
+
+  const handleStatusChange = (orderId, status) => {
+    dispatch(updateOrderStatus({id:orderId,status}))
+    // console.log({id:orderId,status});
+  };
+  if(loading) return <p>Loading...</p>
+  if(error) return <p>Error:{error}</p>
   return (
     <div className="max-w-7xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6 ">Order Management</h2>
@@ -73,37 +91,40 @@ const OrderManagement = () => {
                   <td className="py-4 px-4 font-medium text-gray-900 whitespace-nowrap ">
                     #{order._id}
                   </td>
+                  <td className="py-4 ">{order.user? order.user.name:"unknown"}</td>
+                  <td className="py-4 ">${order.totalPrice.toFixed(2)}</td>
                   <td className="py-4 ">
-                    {order.user.name}
-                  </td>
-                  <td className="py-4 ">
-                    ${order.totalPrice}
-                  </td>
-                  <td className="py-4 ">
-                    <select value={order.status}
-                    onChange={(e)=>handleStatusChange(order._id,e.target.value)}
-                    className="bg-gray-50 border border-gray-300
+                    <select
+                      value={order.status}
+                      onChange={(e) =>
+                        handleStatusChange(order._id, e.target.value)
+                      }
+                      className="bg-gray-50 border border-gray-300
                      text-gray-900 text-sm rounded-lg
                      focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                     >
-                        <option value="Processing">Processing</option>
-                        <option value="Shipped">Shipped</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Cancelled">Cancelled</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled">Cancelled</option>
                     </select>
                   </td>
                   <td className="p-4">
-                    <button 
-                    onClick={()=>handleStatusChange(order._id, "Delivered")}
-                    className="bg-green-500 hover:bg-green-600 rounded-lg
-                     px-4 py-2 text-white ">Mark As Delivered</button>
+                    <button
+                      onClick={() => handleStatusChange(order._id, "Delivered")}
+                      className="bg-green-500 hover:bg-green-600 rounded-lg
+                     px-4 py-2 text-white "
+                    >
+                      Mark As Delivered
+                    </button>
                   </td>
-
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="p-4 text-center text-gray-500">No Orders Found</td>
+                <td colSpan={5} className="p-4 text-center text-gray-500">
+                  No Orders Found
+                </td>
               </tr>
             )}
           </tbody>

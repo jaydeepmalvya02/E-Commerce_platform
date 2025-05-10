@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  createAsyncThunk,
-
-} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Retrieve user info and token from localStorage if available
@@ -81,11 +77,11 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state,action) => {
+      .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.user = action.payload;
       })
-      .addCase(loginUser.rejected, (state,action) => {
+      .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       })
@@ -93,15 +89,15 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state,action) => {
+      .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.user = action.payload;
       })
-      .addCase(registerUser.rejected, (state,action) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });
   },
 });
-export const {logout,generateNewGuestId}=authSlice.actions;
-export default authSlice.reducer
+export const { logout, generateNewGuestId } = authSlice.actions;
+export default authSlice.reducer;

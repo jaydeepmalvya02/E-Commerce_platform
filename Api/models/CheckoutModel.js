@@ -11,10 +11,7 @@ const checkoutItemSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
+    image: [],
     price: {
       type: Number,
       required: true,
@@ -79,5 +76,4 @@ const checkoutSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-module.exports=mongoose.model("Checkout",checkoutSchema)
+module.exports = mongoose.model("Checkout", checkoutSchema);

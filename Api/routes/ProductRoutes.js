@@ -120,8 +120,9 @@ router.put("/:id", protect, admin, async (req, res) => {
       product.sku = sku || product.sku;
       //  Save the updated product
       const updatedProduct = await product.save();
-      res.json(updatedProduct);
       console.log(updatedProduct);
+      res.status(201).json(updatedProduct);
+    
     } else {
       res.status(404).json({ message: "Product Not Found!" });
     }

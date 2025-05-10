@@ -30,7 +30,7 @@ export const updateOrderStatus = createAsyncThunk(
   async ({ id, status }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${API_URL}/api/admin/orders/${id}`,
+        `${API_URL}/api/admin/orders/update/${id}`,
         { status },
         {
           headers: {
@@ -50,7 +50,7 @@ export const deleteOrder = createAsyncThunk(
   async ({ id }, { rejectWithValue }) => {
     try {
       await axios.delete(
-        `${API_URL}/api/admin/orders/${id}`,
+        `${API_URL}/api/admin/orders/delete/${id}`,
 
         {
           headers: {

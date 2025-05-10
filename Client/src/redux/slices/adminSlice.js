@@ -10,7 +10,7 @@ export const fetchUsers = createAsyncThunk("admin/fetchUsers", async () => {
       },
     }
   );
-  response.data;
+  return response.data;
 });
 // Add the create user action
 export const addUser = createAsyncThunk(
@@ -18,7 +18,7 @@ export const addUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/users`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/add`,
         userData,
         {
           headers: {
@@ -40,7 +40,7 @@ export const updateUser = createAsyncThunk(
   async ({ id, name, email, role }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/${id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/update/${id}`,
         { name, email, role },
         {
           headers: {
@@ -58,7 +58,7 @@ export const updateUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk("admin/deleteUser", async (id) => {
   await axios.delete(
-    `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/${id}`,
+    `${import.meta.env.VITE_BACKEND_URL}/api/admin/users/delete/${id}`,
     {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("userToken")}`,
@@ -72,26 +72,28 @@ const adminSlice = createSlice({
   name: "admin",
   initialState: {
     users: [],
-    laoding: false,
+    loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
-        state.laoding = true;
+        state.loading = true;
         state.error = null;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.laoding = false;
+        state.loading = false;
         state.users = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
-        state.laoding = false;
-        state.error = action.payload.message;
+        state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         const updatedUser = action.payload;
+        console.log(action.payload);
+
         const userIndex = state.users.findIndex(
           (user) => user._id === updatedUser._id
         );
@@ -103,18 +105,18 @@ const adminSlice = createSlice({
         state.users = state.users.filter((user) => user._id !== action.payload);
       })
       .addCase(addUser.pending, (state) => {
-        state.laoding = true;
+        state.loading = true;
         state.error = null;
       })
       .addCase(addUser.fulfilled, (state, action) => {
-        state.laoding = false;
-        state.users.push(action.payload.user);
+        state.loading = false;
+        state.users.push(action.payload);
       })
       .addCase(addUser.rejected, (state, action) => {
-        state.laoding = false;
-        state.error = action.payload.message;
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
 
-export default adminSlice.reducer
+export default adminSlice.reducer;
