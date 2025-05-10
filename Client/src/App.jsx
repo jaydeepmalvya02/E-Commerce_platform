@@ -10,7 +10,7 @@ import ProductDetails from "./components/Products/ProductDetails";
 import Checkout from "./components/Cart/Checkout";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
-import MyOrdersPage from "./pages/MyOrderspage";
+import MyOrdersPage from "./pages/MyOrdersPage";
 import AdminLayout from "./components/Admin/AdminLayout";
 import AdminHomePage from "./components/Admin/AdminHomePage";
 import UserManagement from "./components/Admin/UserManagement";
