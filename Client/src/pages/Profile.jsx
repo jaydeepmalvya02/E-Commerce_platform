@@ -1,5 +1,5 @@
 import React from "react";
-import MyOrderspage from "./MyOrderspage";
+import MyOrdersPage from "./MyOrdersPage";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -40,7 +40,7 @@ const Profile = () => {
           </div>
           {/* Right Section:Orders table */}
           <div className="w-full md:w-2/3 lg:w-3/4">
-            <MyOrderspage />
+            <MyOrdersPage />
           </div>
         </div>
       </div>
