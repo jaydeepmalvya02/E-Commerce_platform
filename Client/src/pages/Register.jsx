@@ -5,6 +5,7 @@ import { registerUser } from "../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { mergeCart } from "../redux/slices/cartSlice";
+import OAuth from "../components/Auth/OAuth";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -92,6 +93,7 @@ const Register = () => {
           >
             Sign Up
           </button>
+          <OAuth/>
           <p className="mt-6 text-center text-sm ">
             have an account?{" "}
             <Link to={`/login?redirect=${encodeURIComponent(redirect)}` }className="text-blue-500">

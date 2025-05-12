@@ -5,6 +5,7 @@ import { loginUser } from "../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { mergeCart } from "../redux/slices/cartSlice";
+import OAuth from "../components/Auth/OAuth";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,6 +77,7 @@ const Login = () => {
           >
             Sign In
           </button>
+          <OAuth/>
           <p className="mt-6 text-center text-sm ">
             Don't have an account?{" "}
             <Link

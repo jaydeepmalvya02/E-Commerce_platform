@@ -54,6 +54,23 @@ export const registerUser = createAsyncThunk(
     }
   }
 );
+// Aync thunk for Google
+export const Google = createAsyncThunk(
+  "auth/google",
+  async (googleUser, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/users/google`,
+        googleUser
+      );
+      localStorage.setItem("userInfo", JSON.stringify(response.data.user));
+      localStorage.setItem("userToken", response.data.token);
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+);
 // Slice
 const authSlice = createSlice({
   name: "auth",
@@ -96,7 +113,20 @@ const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
+      })
+      .addCase(Google.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(Google.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(Google.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+      
   },
 });
 export const { logout, generateNewGuestId } = authSlice.actions;
