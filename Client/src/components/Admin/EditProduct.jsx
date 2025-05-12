@@ -46,17 +46,23 @@ useEffect(() => {
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
+    
     const formData=new FormData
     formData.append("image",file);
     try {
       setUploading(true)
-      const {data}=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/upload `,formData,{headers:{
+      const {data}=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/upload`,formData,{headers:{
         "Content-Type":"multipart/form-data"
       },})
       setProductData((prevData)=>({
         ...prevData,
-        images:[...prevData.images,{url:data.imageUrl,altText:""}]
+        images:[...prevData.images,{url:data.url,altText:""}]
+        
       }))
+      console.log("Upload response:", data);
+
+      
       setUploading(false)
     } catch (error) {
       console.error(error);
@@ -69,7 +75,7 @@ useEffect(() => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateProduct({id,productData}))
-    // console.log(productData);
+    console.log(productData);
     navigate("/admin/products")
   
   };

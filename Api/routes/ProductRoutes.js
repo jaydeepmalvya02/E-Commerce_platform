@@ -93,40 +93,42 @@ router.put("/:id", protect, admin, async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
       // Update product fields
-      product.name = name || product.name;
-      product.description = description || product.description;
-      product.price = price || product.price;
-      product.discountPrice = discountPrice || product.discountPrice;
-      product.countInStock = countInStock || product.countInStock;
-      product.category = category || product.category;
-      product.brand = brand || product.brand;
-      product.sizes = sizes || product.sizes;
-      product.colors = colors || product.colors;
-      product.collections = collections || product.collections;
-      product.material = material || product.material;
-      product.gender = gender || product.gender;
-      product.images = images || product.images;
+      product.name = name ?? product.name;
+      product.description = description ?? product.description;
+      product.price = price ?? product.price;
+      product.discountPrice = discountPrice ?? product.discountPrice;
+      product.countInStock = countInStock ?? product.countInStock;
+      product.category = category ?? product.category;
+      product.brand = brand ?? product.brand;
+      product.sizes = sizes ?? product.sizes;
+      product.colors = colors ?? product.colors;
+      product.collections = collections ?? product.collections;
+      product.material = material ?? product.material;
+      product.gender = gender ?? product.gender;
+      product.images = images ?? product.images;
       product.isFeatured =
         isFeatured !== undefined
           ? isFeatured
-          : product.isFeatured || product.isFeatured;
+          : product.isFeatured ?? product.isFeatured;
       product.isPublished =
         isPublished != undefined
           ? isPublished
-          : product.isPublished || product.isPublished;
-      product.tags = tags || product.tags;
-      product.dimensions = dimensions || product.dimensions;
-      product.weight = weight || product.weight;
-      product.sku = sku || product.sku;
+          : product.isPublished ?? product.isPublished;
+      product.tags = tags ?? product.tags;
+      product.dimensions = dimensions ?? product.dimensions;
+      product.weight = weight ?? product.weight;
+      product.sku = sku ?? product.sku;
       //  Save the updated product
       const updatedProduct = await product.save();
       console.log(updatedProduct);
-      res.status(201).json(updatedProduct);
+      res.status(200).json(updatedProduct);
     
     } else {
       res.status(404).json({ message: "Product Not Found!" });
     }
   } catch (error) {
+    console.error(error);
+    
     res.status(500).send("server error");
   }
 });
