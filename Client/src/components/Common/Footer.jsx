@@ -37,22 +37,34 @@ const Footer = () => {
           <h3 className="text-lg text-gray-800 mb-4">Shop</h3>
           <ul className="space-y-2 text-gray-600">
             <li>
-              <Link to="#" className="hover:text-gray-500 transition-colors">
+              <Link
+                to="/collections/all?category=Top+Wear&gender=Men"
+                className="hover:text-gray-500 transition-colors"
+              >
                 Men's Top Wear
               </Link>
             </li>
             <li>
-              <Link to="#" className="hover:text-gray-500 transition-colors">
+              <Link
+                to="/collections/all?category=Top+Wear&gender=Women"
+                className="hover:text-gray-500 transition-colors"
+              >
                 Women's Top Wear
               </Link>
             </li>
             <li>
-              <Link to="#" className="hover:text-gray-500 transition-colors">
+              <Link
+                to="/collections/all?category=Bottom+Wear&gender=Men"
+                className="hover:text-gray-500 transition-colors"
+              >
                 Men's Bottom Wear
               </Link>
             </li>
             <li>
-              <Link to="#" className="hover:text-gray-500 transition-colors">
+              <Link
+                to="/collections/all?category=Bottom+Wear&gender=Women"
+                className="hover:text-gray-500 transition-colors"
+              >
                 Women's Bottom Wear
               </Link>
             </li>
@@ -97,7 +109,7 @@ const Footer = () => {
               <TbBrandMeta className="h-5 w-5" />
             </a>
             <a
-              href="https://www/facebook.com"
+              href="https://www.instagram.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-300"
@@ -105,7 +117,7 @@ const Footer = () => {
               <IoLogoInstagram className="h-5 w-5" />
             </a>
             <a
-              href="https://www/facebook.com"
+              href="https://www.twitter.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-300"
@@ -116,13 +128,15 @@ const Footer = () => {
           <p className="text-gary-500">Call Us</p>
           <p>
             <FiPhoneCall className="inline-block mr-2" />
-            0123-456-789
+            +917728487645
           </p>
         </div>
       </div>
       {/* Footer Bottom */}
       <div className="container mx-auto mt-12 px-4 lg:px-0 border-t border-gray-200 pt-6 ">
-        <p className='text-gray-500 text-sm tracking-tighter text-center'>©2025, Compiletab All Rights Reserved.</p>
+        <p className="text-gray-500 text-sm tracking-tighter text-center">
+          ©2025, InstaMD All Rights Reserved.
+        </p>
       </div>
     </footer>
   );

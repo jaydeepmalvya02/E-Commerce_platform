@@ -9,10 +9,10 @@ const FeaturesSection = () => {
             {/* Feature 1 */}
             <div className="flex flex-col items-center">
                 <div className="p-4 rounded-full mb-4">
-                    <HiShoppingBag className='text-xl'/>
+                    <HiShoppingBag className='text-5xl '/>
 
                 </div>
-                <h4 className="tracking-tighter mb-2 ">
+                <h4 className="tracking-tighter mb-2 text-sm ">
                     FREE INTERNATIONAL SHIPPING
                 </h4>
                 <p className="text-gray-600 text-sm tracking-tighter">
@@ -23,10 +23,10 @@ const FeaturesSection = () => {
             {/* Feature 2 */}
             <div className="flex flex-col items-center">
                 <div className="p-4 rounded-full mb-4">
-                    <HiArrowPathRoundedSquare className='text-xl'/>
+                    <HiArrowPathRoundedSquare className='text-5xl'/>
 
                 </div>
-                <h4 className="tracking-tighter mb-2 ">
+                <h4 className="tracking-tighter mb-2  text-sm">
                    45 DAYS RETURN
                 </h4>
                 <p className="text-gray-600 text-sm tracking-tighter">
@@ -37,10 +37,10 @@ const FeaturesSection = () => {
             {/* Feature 3 */}
             <div className="flex flex-col items-center">
                 <div className="p-4 rounded-full mb-4">
-                    <HiOutlineCreditCard className='text-xl'/>
+                    <HiOutlineCreditCard className='text-5xl'/>
 
                 </div>
-                <h4 className="tracking-tighter mb-2 ">
+                <h4 className="tracking-tighter mb-2 text-sm ">
                     SECURE CHECKOUT
                 </h4>
                 <p className="text-gray-600 text-sm tracking-tighter">
