@@ -124,81 +124,62 @@ router.get('/profile',protect ,async(req,res)=>{
     res.json(req.user)
 })
 // google auth routes
-router.post('/google',async(req,res)=>{
-  try {
-    const user=await User.findOne({email:req.body.email})
-    if(user){
-      const payload = {
-        user: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          password: user.password,
-          role: user.role,
-        },
-      };
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: "40h" },
-        (err, token) => {
-          if (err) throw err;
-          // Send the user and token in response
-          res.json({
-            user: {
-              _id: user._id,
-              name: user.name,
-              email: user.email,
-              password: user.password,
-              role: user.role,
-            },
-            token,
-          });
-        }
-      );
-    }
-    else{
-      const generatedPassword=Math.random().toString(36).slice(-8);
-      const hashedPassword=bcrypt.hashSync(generatedPassword,10)
-      const newUser=new User({username:req.body.name.split("").join("").toLowercase()+Math.random().toString(36).slice(-4),email:req.body.email,password:hashedPassword})
-      await newUser.save()
-      const payload = {
-        user: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          password: user.password,
-          role: user.role,
-        },
-      };
-      jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: "40h" },
-        (err, token) => {
-          if (err) throw err;
-          // Send the user and token in response
-          res.json({
-            user: {
-              _id: user._id,
-              name: user.name,
-              email: user.email,
-              password: user.password,
-              role: user.role,
-            },
-            token,
-          });
-        }
-      );
-      
-    }
-   
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({message:"Server error "})
 
-    
+router.post("/google", async (req, res) => {
+  try {
+    const { email, name } = req.body;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      const generatedPassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcrypt.hash(generatedPassword, 10);
+      const username =
+        name.split(" ").join("").toLowerCase() +
+        Math.random().toString(36).slice(-4);
+
+      user = new User({
+        name,
+        username,
+        email,
+        password: hashedPassword,
+        role: "user", // or whatever default role you want
+      });
+
+      await user.save();
+    }
+
+    const payload = {
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: "40h" },
+      (err, token) => {
+        if (err) throw err;
+
+        res.json({
+          user: {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+          },
+          token,
+        });
+      }
+    );
+  } catch (error) {
+    console.error("Google login error:", error.message);
+    res.status(500).json({ message: "Server error" });
   }
-})
+});
 module.exports = router;
 
