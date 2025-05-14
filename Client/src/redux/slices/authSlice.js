@@ -80,7 +80,7 @@ const authSlice = createSlice({
       state.user = null;
       state.guestId = `guest_${new Date().getTime()}`;
       localStorage.removeItem("userInfo");
-      localStorage.removeItem("useToken");
+      localStorage.removeItem("userToken");
       localStorage.setItem("guestId", state.guestId);
     },
     generateNewGuestId: (state) => {
