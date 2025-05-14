@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/UserModel.js");
 const jwt = require("jsonwebtoken");
 const {protect}=require('../middleware/authMiddleware.js')
+const bcrypt=require('bcrypt')
 const router = express.Router();
 
 // @route POST /api/users/register
