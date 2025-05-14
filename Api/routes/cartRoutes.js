@@ -72,7 +72,7 @@ router.post("/", async (req, res) => {
         ],
         totalPrice: product.price * quantity,
       });
-
+      console.log("Adding quantity:", quantity, typeof quantity);
       return res.status(200).json(newCart);
     }
   } catch (error) {
@@ -97,13 +97,14 @@ router.put("/", async (req, res) => {
 
     if (index > -1) {
       if (quantity > 0) {
-        cart.products[index].quantity += parseInt(quantity);
+        cart.products[index].quantity = parseInt(quantity);
       } else {
         cart.products.splice(index, 1);
       }
 
       cart.totalPrice = calculateTotalPrice(cart.products);
       await cart.save();
+      console.log("Adding quantity:", quantity, typeof quantity);
       return res.status(200).json(cart);
     } else {
       return res.status(404).json({ message: "Product not found in cart" });
