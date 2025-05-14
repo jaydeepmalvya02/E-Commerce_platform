@@ -143,9 +143,10 @@ router.post("/google", async (req, res) => {
         username,
         email,
         password: hashedPassword,
-        role: "user", // or whatever default role you want
+        role: "customer", // or whatever default role you want
       });
-
+      console.log(user);
+      
       await user.save();
     }
 
