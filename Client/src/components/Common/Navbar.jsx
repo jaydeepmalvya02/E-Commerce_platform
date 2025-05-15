@@ -10,7 +10,7 @@ import CartDrawer from '../Layout/CartDrawer'
 import { IoMdClose } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { FaShoppingCart } from "react-icons/fa";
-import SwiftCartBrand from '../Logo/productLogo'
+import SwiftCartBrand from '../Logo/ProductLogo'
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
