@@ -9,6 +9,8 @@ import SearchBar from './SearchBar'
 import CartDrawer from '../Layout/CartDrawer'
 import { IoMdClose } from 'react-icons/io'
 import { useSelector } from 'react-redux'
+import { FaShoppingCart } from "react-icons/fa";
+import SwiftCartBrand from '../Logo/productLogo'
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -31,7 +33,7 @@ const Navbar = () => {
         {/* Left-Logo */}
         <div className="">
           <Link to="/" className="text-2xl font-medium">
-            Rabbit
+            <SwiftCartBrand/>
           </Link>
         </div>
         {/* Center-Navigation Links */}
