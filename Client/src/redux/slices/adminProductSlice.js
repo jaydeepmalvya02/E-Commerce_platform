@@ -21,7 +21,7 @@ export const createProduct = createAsyncThunk(
   "adminProducts/createProduct",
   async (productData) => {
     const response = await axios.post(
-      `${API_URL}/api/products`,
+      `${API_URL}/api/products/create`,
       productData,
       {
         headers: {

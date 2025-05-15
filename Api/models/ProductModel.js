@@ -30,7 +30,7 @@ const productSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    required: true,
+    
   },
   brand: {
     type: String,
@@ -45,7 +45,7 @@ const productSchema = new mongoose.Schema({
   },
   collections: {
     type: String,
-    required: true,
+   
   },
   material: {
     type: String,
