@@ -27,7 +27,7 @@ export const fetchProductsByFilters = createAsyncThunk(
     if (minPrice) query.append("minPrice", minPrice);
     if (maxPrice) query.append("maxPrice", maxPrice);
     if (sortBy) query.append("sortBy", sortBy);
-    if (search) query.append("collection", search);
+    if (search) query.append("search", search);
     if (category) query.append("category", category);
     if (material) query.append("material", material);
     if (brand) query.append("brand", brand);
