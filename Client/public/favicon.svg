@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg baseProfile="full" height="150px" version="1.1" width="400px" xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css"><![CDATA[
+@keyframes slideInLeft {
+  0% { transform: translateX(-50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInRight {
+  0% { transform: translateX(50px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.cart {
+  animation: slideInLeft 1s ease-in-out infinite alternate;
+}
+.text {
+  animation: slideInRight 1s ease-in-out infinite alternate;
+}
+]]></style></defs><rect class="cart" fill="#15803d" height="30" rx="4" ry="4" width="60" x="30" y="60" /><circle class="cart" cx="35" cy="95" fill="#15803d" r="5" /><circle class="cart" cx="80" cy="95" fill="#15803d" r="5" /><text class="text" fill="#1f2937" font-size="32px" font-weight="bold" x="110" y="90">Swift</text><text class="text" fill="#15803d" font-size="32px" font-weight="bold" x="190" y="90">Cart</text></svg>
